@@ -63,8 +63,10 @@ class ScreenRecorder():
         self.btn_rec = Button(self.root, text="Record", command=self.rec, state=ACTIVE, font="fontButton")
         self.btn_stop = Button(self.root, text=" Stop ", command=self.stop, state=DISABLED, font="fontButton")
 
-        l = Label(self.root, text="")
-        l1 = Label(self.root, text="")
+        l = Label(self.root, text="test 1")
+        l1 = Label(self.root, text="text 2")
+        l2 = Label(self.root, text="text 3")
+        text = Text(self.root, height=2, width=25)
 
         self.lbl_time.grid(row=0, column=0, columnspan=2)
 
@@ -72,8 +74,10 @@ class ScreenRecorder():
         self.btn_stop.grid(row=1, column=1, padx=1)
         l.grid(row=2, column=0,columnspan=2)
         l1.grid(row=3, column=0,columnspan=2)
+        l2.grid(row=4, column=0,columnspan=2)
+        text.grid(row=4, column=0,columnspan=2)
         self.root.minsize(160,105)
-        self.root.maxsize(160,105)
+        self.root.maxsize(400,400)
         self.root.title("Desktop REC")
         self.root.attributes("-topmost", 1)
         self.root.mainloop()
@@ -117,8 +121,6 @@ class ScreenRecorder():
 
                 self.root.update()
                 secs += 1
-
-
 
 
 s = ScreenRecorder()
