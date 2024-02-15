@@ -36,6 +36,7 @@ import tempfile
 import optparse
 import subprocess
 import re
+from security import safe_command
 
 # Easy-to-change defaults for users
 DEFAULT_FPS = 15
@@ -156,7 +157,7 @@ class RecordScreen():
         else:
             # Otherwise call xdpyinfo and parse its output
             try:
-                proc = subprocess.Popen("xdpyinfo", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                proc = safe_command.run(subprocess.Popen, "xdpyinfo", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             except OSError:
                 return None
             out, err = proc.communicate()
@@ -177,7 +178,7 @@ class RecordScreen():
             position and size.
         """
         try:
-            proc = subprocess.Popen("xwininfo", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            proc = safe_command.run(subprocess.Popen, "xwininfo", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except OSError:
             return None
         out, err = proc.communicate()
@@ -364,9 +365,9 @@ if __name__ == "__main__":
 
     # Capture!
     if not opts.no_audio:
-        proc = subprocess.Popen(rs.capture_line(fps, x, y, width, height, opts.display_device, opts.audio_device, opts.vcodec, opts.acodec, out_path)).wait()
+        proc = safe_command.run(subprocess.Popen, rs.capture_line(fps, x, y, width, height, opts.display_device, opts.audio_device, opts.vcodec, opts.acodec, out_path)).wait()
     else:
-        proc = subprocess.Popen(rs.video_capture_line(fps, x, y, width, height, opts.display_device, opts.vcodec, out_path)).wait()
+        proc = safe_command.run(subprocess.Popen, rs.video_capture_line(fps, x, y, width, height, opts.display_device, opts.vcodec, out_path)).wait()
 
     #proc.kill()
     print("Done!")
